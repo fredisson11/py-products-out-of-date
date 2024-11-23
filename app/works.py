@@ -1,8 +1,6 @@
+import datetime
 import pytest
-
-from datetime import date
 from unittest.mock import patch
-
 from app.main import outdated_products
 
 
@@ -12,17 +10,17 @@ class TestOutdatedProducts:
         return [
             {
                 "name": "salmon",
-                "expiration_date": date(2022, 2, 10),
+                "expiration_date": datetime.date(2022, 2, 10),
                 "price": 600
             },
             {
                 "name": "chicken",
-                "expiration_date": date(2022, 2, 5),
+                "expiration_date": datetime.date(2022, 2, 5),
                 "price": 120
             },
             {
                 "name": "duck",
-                "expiration_date": date(2022, 2, 1),
+                "expiration_date": datetime.date(2022, 2, 1),
                 "price": 160
             }
         ]
@@ -31,22 +29,22 @@ class TestOutdatedProducts:
         "fake_today, result_list",
         [
             pytest.param(
-                date(2022, 2, 6),
+                datetime.date(2022, 2, 6),
                 ["chicken", "duck"],
                 id="Some products outdated"
             ),
             pytest.param(
-                date(2022, 2, 1),
+                datetime.date(2022, 2, 1),
                 [],
                 id="No products outdated"
             ),
             pytest.param(
-                date(2022, 2, 11),
+                datetime.date(2022, 2, 11),
                 ["salmon", "chicken", "duck"],
                 id="All products outdated"
             ),
             pytest.param(
-                date(2022, 2, 5),
+                datetime.date(2022, 2, 5),
                 ["duck"],
                 id="Boundary condition"
             ),
