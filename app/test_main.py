@@ -8,7 +8,7 @@ from app.main import outdated_products
 
 class TestOutdatedProducts:
     @pytest.fixture()
-    def products_template(self):
+    def products_template(self) -> list:
         return [
             {
                 "name": "salmon",
@@ -52,10 +52,14 @@ class TestOutdatedProducts:
             ),
         ],
     )
-    def test_outdated_products(self, products_template, fake_today, result_list):
+    def test_outdated_products(self,
+                               products_template: list,
+                               fake_today: date,
+                               result_list: list
+                               ) -> None:
         with patch("app.main.datetime") as mock_datetime:
             mock_datetime.date.today.return_value = fake_today
             assert outdated_products(products_template) == result_list
 
-    def test_outdated_products_empty_list(self):
+    def test_outdated_products_empty_list(self) -> None:
         assert outdated_products([]) == []
